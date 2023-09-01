@@ -6,6 +6,8 @@ Welcome to the E-commerce API , your gateway to a world of seamless online shopp
 
 📘 **API Documentation**: Dive deeper into the API functionalities by exploring our detailed [Swagger Documentation](https://e-commerce-api-with-node-js.onrender.com/api-docs/).
 
+**Rate Limiting**: This API has rate limiting implemented to prevent abuse and ensure server stability. Please see the [Rate Limiting Section](#7-rate-limiting) for details on rate limits.
+
 ## Table of Contents
 
 1. [Introduction](#1-introduction)
@@ -96,6 +98,36 @@ Ready to embark on your E-commerce journey? Follow these steps:
 4. Start the server with a mighty `npm run start`.
 
 5. Explore the API endpoints and ensure proper authentication where needed.
+
+## 7. Rate Limiting
+
+To maintain server stability and prevent abuse of the API, rate limiting has been implemented for various API endpoints. Rate limiting restricts the number of requests that can be made to certain endpoints within a specified time frame. This helps ensure fair usage of the API resources and prevents excessive requests from a single source.
+
+### Login and Registration
+
+- **Endpoint**: `/api/users/register`, `/api/users/login`
+- **Rate Limit**: Max 5 requests per IP address per hour
+- **Message**: If you exceed the rate limit for login or registration attempts, you will receive a response with the message "Too many login/register attempts from this IP. Please try again later."
+
+### Product Listing
+
+- **Endpoint**: `/api/products/`
+- **Rate Limit**: Max 25 requests per IP address per hour
+- **Message**: If you exceed the rate limit for product listing requests, you will receive a response with the message "Rate limit exceeded for product listing. Please wait and try again later."
+
+### Cart Operations
+
+- **Endpoint**: `/api/cart/add/:productId`, `/api/cart/update/:productId`, `/api/cart/delete/:productId`
+- **Rate Limit**: Max 15 requests per IP address per hour
+- **Message**: If you exceed the rate limit for cart operations, you will receive a response with the message "Rate limit exceeded for cart operations. Please try again later."
+
+### Order Placement
+
+- **Endpoint**: `/api/orders/place`
+- **Rate Limit**: Max 5 orders per IP address per hour
+- **Message**: If you exceed the rate limit for order placement, you will receive a response with the message "Rate limit exceeded for order placement. Please try again later."
+
+Please be mindful of the rate limits and ensure that your application adheres to them to avoid being temporarily restricted from making further requests. If you encounter rate-limiting responses, wait for the specified time frame before making additional requests.
 
 ---
 
