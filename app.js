@@ -4,6 +4,7 @@ const { userRouter } = require("./routes/userRoute");
 const { productRouter } = require("./routes/productRoute");
 const { cartRouter } = require("./routes/cartRoute");
 const { authenticate } = require("./middlewares/authentication");
+const { orderRouter } = require("./routes/orderRoute");
 
 require("dotenv").config();
 
@@ -15,9 +16,10 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/user", userRouter);
-app.use(authenticate);
 app.use("/products", productRouter);
+app.use(authenticate);
 app.use("/cart", cartRouter)
+app.use("/order",orderRouter)
 
 app.listen(process.env.PORT, async () => {
   try {
