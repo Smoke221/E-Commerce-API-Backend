@@ -11,6 +11,25 @@ async function getProducts(req, res) {
   }
 }
 
+async function getProductById(req,res){
+    try{
+        const id = req.params.id
+
+        const isProductAvailable = await productModel.findOne({_id:id})
+
+        if(isProductAvailable){
+            res.send(isProductAvailable)
+        }else{
+            res.send({message:"No product found"})
+        }
+    }
+    catch (err) {
+        res
+          .status(500)
+          .json({ message: "Internal server error", error: err.message });
+      }
+}
+
 // async function insertSample(req, res) {
 //   try {
 //     const productsToInsert = req.body;
@@ -23,4 +42,4 @@ async function getProducts(req, res) {
 //   }
 // }
 
-module.exports = { getProducts };
+module.exports = { getProducts, getProductById };
