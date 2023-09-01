@@ -3,8 +3,13 @@ const { placeOrder, getOrders, orderDetails } = require("../controllers/order");
 
 const orderRouter = express.Router();
 
-orderRouter.post("/place", placeOrder)
-orderRouter.get("/history", getOrders)
-orderRouter.get("/details/:orderId", orderDetails)
+// Place a new order
+orderRouter.post("/place", placeOrder);
+
+// Get the order history for the authenticated user
+orderRouter.get("/history", getOrders);
+
+// Get the details of a specific order by its ID
+orderRouter.get("/details/:orderId", orderDetails);
 
 module.exports = { orderRouter };

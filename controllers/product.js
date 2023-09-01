@@ -1,5 +1,6 @@
 const { productModel } = require("../models/productModel");
 
+// Get a list of products
 async function getProducts(req, res) {
   try {
     const { category } = req.query;
@@ -13,12 +14,14 @@ async function getProducts(req, res) {
       res.send(products);
     }
   } catch (err) {
+    // Handle internal server error.
     res
       .status(500)
       .json({ message: "Internal server error", error: err.message });
   }
 }
 
+// Get a product by ID
 async function getProductById(req, res) {
   try {
     const id = req.params.id;
@@ -31,6 +34,7 @@ async function getProductById(req, res) {
       res.send({ message: "No product found" });
     }
   } catch (err) {
+    // Handle internal server error.
     res
       .status(500)
       .json({ message: "Internal server error", error: err.message });

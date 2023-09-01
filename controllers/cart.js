@@ -1,13 +1,15 @@
 const { cartModel } = require("../models/cartModel");
 const { productModel } = require("../models/productModel");
 
+// Get user's cart
 async function getCart(req, res) {
   try {
     const userId = req.body.userID; // Get the user ID from the auth middleware
-    // Find the user's cart
+
+    // Find the user's cart and populate product details
     const userCart = await cartModel
       .findOne({ user: userId })
-      .populate("products.product", "title price"); // Populate product details
+      .populate("products.product", "title price");
 
     if (!userCart) {
       return res.status(404).json({ message: "Cart not found" });
@@ -21,6 +23,7 @@ async function getCart(req, res) {
   }
 }
 
+// Add a product to the cart
 async function addToCart(req, res) {
   try {
     const userId = req.body.userID; // Get the user ID from the auth middleware
@@ -66,6 +69,8 @@ async function addToCart(req, res) {
       .json({ message: "Internal server error", error: err.message });
   }
 }
+
+// Update the quantity of a cart item
 async function updateCartItemQuantity(req, res) {
   try {
     const userId = req.body.userID; // Get the user ID from the auth middleware
@@ -103,6 +108,7 @@ async function updateCartItemQuantity(req, res) {
   }
 }
 
+// Remove an item from the cart
 async function removeCartItem(req, res) {
   try {
     const userId = req.body.userID; // Get the user ID from the auth middleware
@@ -129,4 +135,5 @@ async function removeCartItem(req, res) {
       .json({ message: "Internal server error", error: error.message });
   }
 }
+
 module.exports = { getCart, addToCart, updateCartItemQuantity, removeCartItem };

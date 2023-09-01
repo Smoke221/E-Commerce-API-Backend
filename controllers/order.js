@@ -1,6 +1,7 @@
 const { cartModel } = require("../models/cartModel");
 const { orderModel } = require("../models/orderModel");
 
+// Place an order
 async function placeOrder(req, res) {
   try {
     const userId = req.body.userID; // Get the user ID from the authenticated user
@@ -43,6 +44,7 @@ async function placeOrder(req, res) {
   }
 }
 
+// Get a user's order history
 async function getOrders(req, res) {
   try {
     const userId = req.body.userID;
@@ -60,6 +62,7 @@ async function getOrders(req, res) {
   }
 }
 
+// Get details of a specific order by ID
 async function orderDetails(req, res) {
   try {
     const orderId = req.params.orderId;
@@ -80,4 +83,5 @@ async function orderDetails(req, res) {
       .json({ message: "Internal server error", error: error.message });
   }
 }
+
 module.exports = { placeOrder, getOrders, orderDetails };

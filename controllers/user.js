@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { userModel } = require("../models/userModel");
 
+// Register a new user
 async function userRegister(req, res) {
   try {
     const { name, email, password } = req.body;
@@ -13,21 +14,25 @@ async function userRegister(req, res) {
     const isExisting = await userModel.findOne({ email });
 
     if (isExisting) {
+      // User with the same email already exists, return an error.
       res.status(400).json({ message: "User already exists, please login" });
     } else {
       // Create a new user document with the hashed password.
       const newUser = new userModel({ name, email, password: hash });
       await newUser.save();
 
+      // User registration successful.
       res.status(201).json({ message: "New user registered" });
     }
   } catch (err) {
+    // Handle internal server error.
     res
       .status(500)
       .json({ message: "Internal server error", error: err.message });
   }
 }
 
+// Login a user
 async function userLogin(req, res) {
   try {
     const { email, password } = req.body;
@@ -45,14 +50,18 @@ async function userLogin(req, res) {
           expiresIn: "1h", // Token expiration time (e.g., 1 hour)
         });
 
+        // Successful login, return a token.
         res.json({ message: "Logged in", token: token });
       } else {
+        // Password does not match.
         res.status(401).json({ message: "Wrong password" });
       }
     } else {
+      // User with the provided email does not exist.
       res.status(401).json({ message: "Wrong credentials" });
     }
   } catch (err) {
+    // Handle internal server error.
     res
       .status(500)
       .json({ message: "Internal server error", error: err.message });
