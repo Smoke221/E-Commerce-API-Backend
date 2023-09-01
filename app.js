@@ -15,6 +15,14 @@ app.use(express.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
+app.get("/", (req, res) => {
+  res.send(`
+        <h1>Welcome to the Ecommerce API with Node.js</h1>
+        <p>This API allows you to manage users, products, shopping carts, and orders.</p>
+  `);
+});
+
+
 app.use("/user", userRouter);
 app.use("/products", productRouter);
 app.use(authenticate);
