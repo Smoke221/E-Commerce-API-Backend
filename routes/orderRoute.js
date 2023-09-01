@@ -1,10 +1,11 @@
 const express = require("express");
 const { placeOrder, getOrders, orderDetails } = require("../controllers/order");
+const { orderPlacementLimiter } = require("../middlewares/rateLimiter");
 
 const orderRouter = express.Router();
 
 // Place a new order
-orderRouter.post("/place", placeOrder);
+orderRouter.post("/place",orderPlacementLimiter, placeOrder);
 
 // Get the order history for the authenticated user
 orderRouter.get("/history", getOrders);

@@ -5,11 +5,14 @@ const {
   updateCartItemQuantity,
   removeCartItem,
 } = require("../controllers/cart");
+const { cartOperationsLimiter } = require("../middlewares/rateLimiter");
 
 const cartRouter = express.Router();
 
 // Get the user's cart
 cartRouter.get("/", getCart);
+
+cartRouter.use(cartOperationsLimiter)
 
 // Add a product to the cart
 cartRouter.post("/add/:productId", addToCart);

@@ -5,8 +5,11 @@ const {
   getProductById,
   getcategories,
 } = require("../controllers/product");
+const { productListingLimiter } = require("../middlewares/rateLimiter");
 
 const productRouter = express.Router();
+
+productRouter.use(productListingLimiter)
 
 // Get all products
 productRouter.get("/", getProducts);
