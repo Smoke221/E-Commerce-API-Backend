@@ -3,6 +3,37 @@ const jwt = require("jsonwebtoken");
 const { userModel } = require("../models/userModel");
 
 // Register a new user
+/**
+ * @swagger
+ * /user/register:
+ *   post:
+ *     summary: Register a new user.
+ *     description: Register a new user with a unique email and hashed password.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *     responses:
+ *       201:
+ *         description: User registration successful.
+ *       400:
+ *         description: User with the same email already exists.
+ *       500:
+ *         description: Internal server error.
+ */
 async function userRegister(req, res) {
   try {
     const { name, email, password } = req.body;
@@ -33,6 +64,34 @@ async function userRegister(req, res) {
 }
 
 // Login a user
+/**
+ * @swagger
+ * /user/login:
+ *   post:
+ *     summary: Login a user.
+ *     description: Authenticate a user by comparing their provided password with the hashed password in the database. Returns a JWT token upon successful login.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             required:
+ *               - email
+ *               - password
+ *     responses:
+ *       200:
+ *         description: Successful login, returns a JWT token.
+ *       401:
+ *         description: Wrong password or user credentials.
+ *       500:
+ *         description: Internal server error.
+ */
 async function userLogin(req, res) {
   try {
     const { email, password } = req.body;

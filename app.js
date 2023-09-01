@@ -5,15 +5,15 @@ const { productRouter } = require("./routes/productRoute");
 const { cartRouter } = require("./routes/cartRoute");
 const { authenticate } = require("./middlewares/authentication");
 const { orderRouter } = require("./routes/orderRoute");
+const swaggerUi = require("swagger-ui-express")
+const swaggerSpec = require("./swagger")
 
 require("dotenv").config();
 
 const app = express();
 app.use(express.json());
 
-app.get("/", async (req, res) => {
-  res.send("working");
-});
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 app.use("/user", userRouter);
 app.use("/products", productRouter);

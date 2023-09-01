@@ -1,6 +1,30 @@
 const { productModel } = require("../models/productModel");
 
 // Get a list of products
+/**
+ * @swagger
+ * /products:
+ *   get:
+ *     summary: Get a list of products.
+ *     description: Get a list of all products or filter by category.
+ *     parameters:
+ *       - in: query
+ *         name: category
+ *         description: Optional category filter.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A list of products.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Product'
+ *       500:
+ *         description: Internal server error.
+ */
 async function getProducts(req, res) {
   try {
     const { category } = req.query;
@@ -22,6 +46,31 @@ async function getProducts(req, res) {
 }
 
 // Get a product by ID
+/**
+ * @swagger
+ * /products/{id}:
+ *   get:
+ *     summary: Get a product by ID.
+ *     description: Get a product's details by its unique ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: The ID of the product to retrieve.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: The product details.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
+ *       404:
+ *         description: Product not found.
+ *       500:
+ *         description: Internal server error.
+ */
 async function getProductById(req, res) {
   try {
     const id = req.params.id;

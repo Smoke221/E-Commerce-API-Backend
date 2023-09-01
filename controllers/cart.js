@@ -2,6 +2,22 @@ const { cartModel } = require("../models/cartModel");
 const { productModel } = require("../models/productModel");
 
 // Get user's cart
+/**
+ * @swagger
+ * /cart:
+ *   get:
+ *     summary: Retrieve User's Shopping Cart
+ *     description: Get the user's shopping cart with detailed product information.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the user's shopping cart.
+ *       404:
+ *         description: The user's cart was not found.
+ *       500:
+ *         description: Internal server error while retrieving the cart.
+ */
 async function getCart(req, res) {
   try {
     const userId = req.body.userID; // Get the user ID from the auth middleware
@@ -24,6 +40,31 @@ async function getCart(req, res) {
 }
 
 // Add a product to the cart
+/**
+ * @swagger
+ * /cart/add/{productId}:
+ *   post:
+ *     summary: Add Product to Cart
+ *     description: Add a product to the user's shopping cart. If the cart doesn't exist, a new cart will be created.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         required: true
+ *         description: The ID of the product to add to the cart.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       201:
+ *         description: Product added to the cart successfully.
+ *       200:
+ *         description: Product is already in the cart.
+ *       404:
+ *         description: Product not found.
+ *       500:
+ *         description: Internal server error while adding the product to the cart.
+ */
 async function addToCart(req, res) {
   try {
     const userId = req.body.userID; // Get the user ID from the auth middleware
@@ -71,6 +112,38 @@ async function addToCart(req, res) {
 }
 
 // Update the quantity of a cart item
+/**
+ * @swagger
+ * /cart/update/{productId}:
+ *   put:
+ *     summary: Update Cart Item Quantity
+ *     description: Update the quantity of a specific product in the user's shopping cart.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         required: true
+ *         description: The ID of the product in the cart to update.
+ *         schema:
+ *           type: string
+ *       - in: body
+ *         name: quantity
+ *         required: true
+ *         description: The new quantity of the product in the cart.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             quantity:
+ *               type: integer
+ *     responses:
+ *       200:
+ *         description: Quantity updated successfully.
+ *       404:
+ *         description: Cart not found or product not found in the cart.
+ *       500:
+ *         description: Internal server error while updating cart item quantity.
+ */
 async function updateCartItemQuantity(req, res) {
   try {
     const userId = req.body.userID; // Get the user ID from the auth middleware
@@ -109,6 +182,29 @@ async function updateCartItemQuantity(req, res) {
 }
 
 // Remove an item from the cart
+    /**
+ * @swagger
+ * /cart/delete/{productId}:
+ *   delete:
+ *     summary: Remove Item from Cart
+ *     description: Remove a specific product from the user's shopping cart.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         required: true
+ *         description: The ID of the product to remove from the cart.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Item removed from the cart successfully.
+ *       404:
+ *         description: Cart not found or product not found in the cart.
+ *       500:
+ *         description: Internal server error while removing the item from the cart.
+ */
 async function removeCartItem(req, res) {
   try {
     const userId = req.body.userID; // Get the user ID from the auth middleware
