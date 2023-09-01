@@ -10,7 +10,7 @@ const options = {
     },
     servers:[
         {
-            url: "http://localhost:3000/"
+            url: "https://e-commerce-api-with-node-js.onrender.com/"
         }
     ]
   },
